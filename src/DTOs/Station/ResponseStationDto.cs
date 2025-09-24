@@ -5,6 +5,13 @@ using System.Threading.Tasks;
 
 namespace perla_metro_api_main.src.DTOs.Station
 {
+
+    public class StationResponseGropuDto
+    {
+        public string Message { get; set; } = string.Empty;
+        public ResponseStationDto Station { get; set; } = new();
+    }
+
     public class ResponseStationDto
     {
 
