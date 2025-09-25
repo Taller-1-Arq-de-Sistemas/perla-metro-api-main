@@ -28,7 +28,25 @@ namespace perla_metro_api_main.src.Controllers
             }
             catch (HttpRequestException ex)
             {
-                return BadRequest(new { message = ex.Message }); 
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { message = e.Message });
+            }
+        }
+
+        [HttpGet("Stations")]
+        public async Task<IActionResult> GetStations([FromQuery] string? Name, [FromQuery] string? Type, [FromQuery] bool? State, CancellationToken ct)
+        {
+            try
+            {
+                var response = await _stationService.GetSations(Name,Type,State,ct);
+                return Ok(response);
+            }
+            catch (HttpRequestException ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
             catch (Exception e)
             {

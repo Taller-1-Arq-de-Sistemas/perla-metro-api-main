@@ -8,6 +8,8 @@ namespace perla_metro_api_main.src.Services.Interfaces
 {
     public interface IStationService
     {
-        public Task<StationResponseGropuDto> CreateStation(CreateStationDto request, CancellationToken ct);
+        public Task<CreateStationResponseDto> CreateStation(CreateStationDto request, CancellationToken ct);
+
+        public Task<GetStationResponseDto> GetSations(string? Name, string? Type, bool? State, CancellationToken ct);
     }
 }

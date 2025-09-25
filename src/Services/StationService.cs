@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using perla_metro_api_main.src.DTOs.Station;
 using perla_metro_api_main.src.Services.Interfaces;
 
@@ -26,7 +28,7 @@ namespace perla_metro_api_main.src.Services
             _httpclient = httpClient;
         }
 
-        public async Task<StationResponseGropuDto> CreateStation(CreateStationDto request, CancellationToken ct)
+        public async Task<CreateStationResponseDto> CreateStation(CreateStationDto request, CancellationToken ct)
         {
             var stationData = JsonSerializer.Serialize(request);
             var response = await _httpclient.PostAsync($"{_stationUrl}/Station/CreateStation", new StringContent(stationData, Encoding.UTF8, "application/json"), ct);
@@ -38,12 +40,50 @@ namespace perla_metro_api_main.src.Services
                 throw new HttpRequestException($"Error al crear una estacion: {response.StatusCode}, {errorContent}");
             }
 
-            var result = await response.Content.ReadAsStringAsync(ct);
+            var resultResponse = await response.Content.ReadAsStringAsync(ct);
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var wrapper = JsonSerializer.Deserialize<StationResponseGropuDto>(result, options) ?? throw new Exception("No se pudo deserializar la respuesta");
+            var result = JsonSerializer.Deserialize<CreateStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
 
-            return wrapper;
+            return result;
+        }
+
+        public async Task<GetStationResponseDto> GetSations(string? Name, string? Type, bool? State, CancellationToken ct)
+        {
+            var queryParams = new Dictionary<string, string?>();
+
+            if (!string.IsNullOrWhiteSpace(Name))
+            {
+                queryParams["name"] = Name;
+            }
+
+            if (!string.IsNullOrWhiteSpace(Type))
+            {
+                queryParams["type"] = Type;
+            }
+
+            if (State.HasValue)
+            {
+                queryParams["state"] = State.Value.ToString();
+            }
+
+            var url = QueryHelpers.AddQueryString($"{_stationUrl}/Station/Stations", queryParams);
+
+            var response = await _httpclient.GetAsync(url, ct);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync(ct);
+                throw new HttpRequestException($"Error al obtener listado de estaciones: {response.StatusCode}, {errorContent}");
+            }
+
+            var resultResponse = await response.Content.ReadAsStringAsync(ct);
+
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var result = JsonSerializer.Deserialize<GetStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
+
+            return result;
+
         }
 
     }
