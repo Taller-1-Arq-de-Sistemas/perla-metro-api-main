@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace perla_metro_api_main.src.DTOs.Station
@@ -15,7 +16,9 @@ namespace perla_metro_api_main.src.DTOs.Station
     public class GetStationResponseDto
 {
     public string Message { get; set; } = string.Empty;
-    public List<ResponseStationDto> Estaciones { get; set; } = new();
+
+    [JsonPropertyName("estaciones")]
+    public List<ResponseStationDto> Stations { get; set; } = new();
 }
 
     public class ResponseStationDto

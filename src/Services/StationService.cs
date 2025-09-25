@@ -86,5 +86,28 @@ namespace perla_metro_api_main.src.Services
 
         }
 
+
+        public async Task<GetByIdStationResponseDto> GetStationById(Guid ID, CancellationToken ct)
+        {
+            var response = await _httpclient.GetAsync($"{_stationUrl}/Station/{ID}", ct);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync(ct);
+                throw new HttpRequestException($"Error al obtener estacion solicitada: {response.StatusCode}, {errorContent}");
+            }
+
+            var resultResponse = await response.Content.ReadAsStringAsync(ct);
+
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var result = JsonSerializer.Deserialize<GetByIdStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
+
+            return result;
+
+            
+        }   
+
+
+
     }
 }
