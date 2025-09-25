@@ -104,8 +104,26 @@ namespace perla_metro_api_main.src.Services
 
             return result;
 
-            
         }   
+
+        public async Task<EditStationResponseDto> EditStation(Guid ID,EditStationDto request, CancellationToken ct)
+        {
+            var EditData = JsonSerializer.Serialize(request);
+            var response = await _httpclient.PutAsync($"{_stationUrl}/Station/EditStation/{ID}", new StringContent(EditData, Encoding.UTF8, "application/json"), ct);
+
+            if (!response.IsSuccessStatusCode)
+            {
+
+                var errorContent = await response.Content.ReadAsStringAsync(ct);
+                throw new HttpRequestException($"Error al crear una estacion: {response.StatusCode}, {errorContent}");
+            }
+
+            var resultResponse = await response.Content.ReadAsStringAsync(ct);
+
+            var result = JsonSerializer.Deserialize<EditStationResponseDto>(resultResponse) ?? throw new Exception("No se pudo deserializar la respuesta");
+
+            return result;
+        }
 
 
 
