@@ -104,9 +104,9 @@ namespace perla_metro_api_main.src.Services
 
             return result;
 
-        }   
+        }
 
-        public async Task<CreateEditStationResponseDto> EditStation(Guid ID,EditStationDto request, CancellationToken ct)
+        public async Task<CreateEditStationResponseDto> EditStation(Guid ID, EditStationDto request, CancellationToken ct)
         {
             var EditData = JsonSerializer.Serialize(request);
             var response = await _httpclient.PutAsync($"{_stationUrl}/Station/EditStation/{ID}", new StringContent(EditData, Encoding.UTF8, "application/json"), ct);
@@ -122,11 +122,32 @@ namespace perla_metro_api_main.src.Services
 
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var result = JsonSerializer.Deserialize<CreateEditStationResponseDto>(resultResponse,options) ?? throw new Exception("No se pudo deserializar la respuesta");
+            var result = JsonSerializer.Deserialize<CreateEditStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
 
             return result;
         }
 
+
+        public async Task<DisabledEnabledStationResponseDto> DisabledEnabledStation(Guid ID, CancellationToken ct)
+        {
+    
+            var response = await _httpclient.PutAsync($"{_stationUrl}/Station/ChangeStateStation/{ID}",null,ct);
+
+            if (!response.IsSuccessStatusCode)
+            {
+
+                var errorContent = await response.Content.ReadAsStringAsync(ct);
+                throw new HttpRequestException($"Error al crear una estacion: {response.StatusCode}, {errorContent}");
+            }
+
+            var resultResponse = await response.Content.ReadAsStringAsync(ct);
+
+
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var result = JsonSerializer.Deserialize<DisabledEnabledStationResponseDto>(resultResponse,options) ?? throw new Exception("No se pudo deserializar la respuesta");
+
+            return result;
+        }
 
 
     }

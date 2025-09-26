@@ -80,7 +80,26 @@ namespace perla_metro_api_main.src.Controllers
         {
             try
             {
-                var response = await _stationService.EditStation(ID,request, ct);
+                var response = await _stationService.EditStation(ID, request, ct);
+                return Ok(response);
+            }
+            catch (HttpRequestException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new { message = e.Message });
+            }
+        }
+        
+        //TODO: agregar restriccion de roles
+        [HttpPut("ChangeStateStation/{ID}")]
+        public async Task<IActionResult> DisabledEnabledStation(Guid ID, CancellationToken ct)
+        {
+            try
+            {
+                var response = await _stationService.DisabledEnabledStation(ID, ct);
                 return Ok(response);
             }
             catch (HttpRequestException ex)

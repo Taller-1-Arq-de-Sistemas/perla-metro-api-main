@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 namespace perla_metro_api_main.src.DTOs.Station
 {
 
+
+    public class DisabledEnabledStationResponseDto
+    
+    {
+        public string Message { get; set; } = string.Empty;
+    }
+
     public class CreateEditStationResponseDto
     {
         public string Message { get; set; } = string.Empty;
