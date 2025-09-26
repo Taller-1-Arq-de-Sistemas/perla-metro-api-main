@@ -31,21 +31,10 @@ namespace perla_metro_api_main.src.Services
         public async Task<CreateEditStationResponseDto> CreateStation(CreateStationDto request, CancellationToken ct)
         {
             var stationData = JsonSerializer.Serialize(request);
-            var response = await _httpclient.PostAsync($"{_stationUrl}/Station/CreateStation", new StringContent(stationData, Encoding.UTF8, "application/json"), ct);
 
-            if (!response.IsSuccessStatusCode)
-            {
-
-                var errorContent = await response.Content.ReadAsStringAsync(ct);
-                throw new HttpRequestException($"Error al crear una estacion: {response.StatusCode}, {errorContent}");
-            }
-
-            var resultResponse = await response.Content.ReadAsStringAsync(ct);
-
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var result = JsonSerializer.Deserialize<CreateEditStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
-
-            return result;
+            var response = await HelperStationService<CreateEditStationResponseDto>(
+                () =>  _httpclient.PostAsync($"{_stationUrl}/Station/CreateStation", new StringContent(stationData, Encoding.UTF8, "application/json"), ct),ct);
+            return response;
         }
 
         public async Task<GetStationResponseDto> GetSations(string? Name, string? Type, bool? State, CancellationToken ct)
@@ -69,69 +58,46 @@ namespace perla_metro_api_main.src.Services
 
             var url = QueryHelpers.AddQueryString($"{_stationUrl}/Station/Stations", queryParams);
 
-            var response = await _httpclient.GetAsync(url, ct);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                var errorContent = await response.Content.ReadAsStringAsync(ct);
-                throw new HttpRequestException($"Error al obtener listado de estaciones: {response.StatusCode}, {errorContent}");
-            }
-
-            var resultResponse = await response.Content.ReadAsStringAsync(ct);
-
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var result = JsonSerializer.Deserialize<GetStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
-
-            return result;
-
+            var response = await HelperStationService<GetStationResponseDto>(
+                () => _httpclient.GetAsync(url, ct), ct);
+            return response;
         }
 
 
         public async Task<GetByIdStationResponseDto> GetStationById(Guid ID, CancellationToken ct)
         {
-            var response = await _httpclient.GetAsync($"{_stationUrl}/Station/{ID}", ct);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                var errorContent = await response.Content.ReadAsStringAsync(ct);
-                throw new HttpRequestException($"Error al obtener estacion solicitada: {response.StatusCode}, {errorContent}");
-            }
-
-            var resultResponse = await response.Content.ReadAsStringAsync(ct);
-
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var result = JsonSerializer.Deserialize<GetByIdStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
-
-            return result;
+            
+            var response = await HelperStationService<GetByIdStationResponseDto>(
+                () => _httpclient.GetAsync($"{_stationUrl}/Station/{ID}", ct), ct);
+            return response;
 
         }
 
         public async Task<CreateEditStationResponseDto> EditStation(Guid ID, EditStationDto request, CancellationToken ct)
         {
             var EditData = JsonSerializer.Serialize(request);
-            var response = await _httpclient.PutAsync($"{_stationUrl}/Station/EditStation/{ID}", new StringContent(EditData, Encoding.UTF8, "application/json"), ct);
 
-            if (!response.IsSuccessStatusCode)
-            {
-
-                var errorContent = await response.Content.ReadAsStringAsync(ct);
-                throw new HttpRequestException($"Error al crear una estacion: {response.StatusCode}, {errorContent}");
-            }
-
-            var resultResponse = await response.Content.ReadAsStringAsync(ct);
-
-
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var result = JsonSerializer.Deserialize<CreateEditStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
-
-            return result;
+            var response = await HelperStationService<CreateEditStationResponseDto>(
+                () => _httpclient.PutAsync($"{_stationUrl}/Station/EditStation/{ID}", new StringContent(EditData, Encoding.UTF8, "application/json"), ct),ct);
+            return response;
         }
 
 
         public async Task<DisabledEnabledStationResponseDto> DisabledEnabledStation(Guid ID, CancellationToken ct)
         {
-    
-            var response = await _httpclient.PutAsync($"{_stationUrl}/Station/ChangeStateStation/{ID}",null,ct);
+
+            var response = await HelperStationService<DisabledEnabledStationResponseDto>(
+                () => _httpclient.PutAsync($"{_stationUrl}/Station/ChangeStateStation/{ID}", null, ct), ct);
+            return response;
+        }
+
+
+
+        private async Task<T> HelperStationService<T>(Func<Task<HttpResponseMessage>> serviceCall, CancellationToken ct)
+        {
+
+            var response = await serviceCall();
 
             if (!response.IsSuccessStatusCode)
             {
@@ -144,10 +110,13 @@ namespace perla_metro_api_main.src.Services
 
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var result = JsonSerializer.Deserialize<DisabledEnabledStationResponseDto>(resultResponse,options) ?? throw new Exception("No se pudo deserializar la respuesta");
+            var result = JsonSerializer.Deserialize<T>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
 
             return result;
         }
+        
+
+        
 
 
     }

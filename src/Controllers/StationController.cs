@@ -22,7 +22,7 @@ namespace perla_metro_api_main.src.Controllers
         [HttpPost("CreateStation")]
         public async Task<IActionResult> CreateStation(CreateStationDto request, CancellationToken ct)
         {
-            var result = await ExecuteServiceStation(async () => await _stationService.CreateStation(request, ct));
+            var result = await HelperStationController( () => _stationService.CreateStation(request, ct));
             return result;
         }
 
@@ -30,14 +30,14 @@ namespace perla_metro_api_main.src.Controllers
         [HttpGet("Stations")]
         public async Task<IActionResult> GetStations([FromQuery] string? Name, [FromQuery] string? Type, [FromQuery] bool? State, CancellationToken ct)
         {
-            var result = await ExecuteServiceStation(async () => await _stationService.GetSations(Name, Type, State, ct));
+            var result = await HelperStationController( () =>  _stationService.GetSations(Name, Type, State, ct));
             return result;
         }
 
         [HttpGet("{ID}")]
         public async Task<IActionResult> GetStationsById(Guid ID, CancellationToken ct)
         {
-            var result = await ExecuteServiceStation(async () => await _stationService.GetStationById(ID,ct));
+            var result = await HelperStationController(() => _stationService.GetStationById(ID,ct));
             return result;
         }
 
@@ -45,7 +45,7 @@ namespace perla_metro_api_main.src.Controllers
         [HttpPut("EditStation/{ID}")]
         public async Task<IActionResult> EditStation(Guid ID, EditStationDto request, CancellationToken ct)
         {
-            var result = await ExecuteServiceStation(async () => await _stationService.EditStation(ID,request,ct));
+            var result = await HelperStationController( () =>  _stationService.EditStation(ID,request,ct));
             return result;
         }
 
@@ -53,12 +53,12 @@ namespace perla_metro_api_main.src.Controllers
         [HttpPut("ChangeStateStation/{ID}")]
         public async Task<IActionResult> DisabledEnabledStation(Guid ID, CancellationToken ct)
         {
-            var result = await ExecuteServiceStation(async () => await _stationService.DisabledEnabledStation(ID,ct));
+            var result = await HelperStationController(() => _stationService.DisabledEnabledStation(ID,ct));
             return result;
         }
         
 
-        private async Task<IActionResult> ExecuteServiceStation<T>(Func<Task<T>> serviceCall)
+        private async Task<IActionResult> HelperStationController<T>(Func<Task<T>> serviceCall)
         {
             try
             {
