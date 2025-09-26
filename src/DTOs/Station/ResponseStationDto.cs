@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 namespace perla_metro_api_main.src.DTOs.Station
 {
 
-    public class CreateStationResponseDto
+    public class CreateEditStationResponseDto
     {
         public string Message { get; set; } = string.Empty;
+
+        [JsonPropertyName("Estacion")]
         public ResponseStationDto Station { get; set; } = new();
     }
 

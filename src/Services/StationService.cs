@@ -28,7 +28,7 @@ namespace perla_metro_api_main.src.Services
             _httpclient = httpClient;
         }
 
-        public async Task<CreateStationResponseDto> CreateStation(CreateStationDto request, CancellationToken ct)
+        public async Task<CreateEditStationResponseDto> CreateStation(CreateStationDto request, CancellationToken ct)
         {
             var stationData = JsonSerializer.Serialize(request);
             var response = await _httpclient.PostAsync($"{_stationUrl}/Station/CreateStation", new StringContent(stationData, Encoding.UTF8, "application/json"), ct);
@@ -43,7 +43,7 @@ namespace perla_metro_api_main.src.Services
             var resultResponse = await response.Content.ReadAsStringAsync(ct);
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var result = JsonSerializer.Deserialize<CreateStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
+            var result = JsonSerializer.Deserialize<CreateEditStationResponseDto>(resultResponse, options) ?? throw new Exception("No se pudo deserializar la respuesta");
 
             return result;
         }
@@ -106,7 +106,7 @@ namespace perla_metro_api_main.src.Services
 
         }   
 
-        public async Task<EditStationResponseDto> EditStation(Guid ID,EditStationDto request, CancellationToken ct)
+        public async Task<CreateEditStationResponseDto> EditStation(Guid ID,EditStationDto request, CancellationToken ct)
         {
             var EditData = JsonSerializer.Serialize(request);
             var response = await _httpclient.PutAsync($"{_stationUrl}/Station/EditStation/{ID}", new StringContent(EditData, Encoding.UTF8, "application/json"), ct);
@@ -120,7 +120,9 @@ namespace perla_metro_api_main.src.Services
 
             var resultResponse = await response.Content.ReadAsStringAsync(ct);
 
-            var result = JsonSerializer.Deserialize<EditStationResponseDto>(resultResponse) ?? throw new Exception("No se pudo deserializar la respuesta");
+
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var result = JsonSerializer.Deserialize<CreateEditStationResponseDto>(resultResponse,options) ?? throw new Exception("No se pudo deserializar la respuesta");
 
             return result;
         }
