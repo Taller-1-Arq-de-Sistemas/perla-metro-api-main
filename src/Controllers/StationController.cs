@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using perla_metro_api_main.src.DTOs.Station;
 using perla_metro_api_main.src.Services.Interfaces;
@@ -18,7 +19,7 @@ namespace perla_metro_api_main.src.Controllers
             _stationService = stationService;
         }
 
-        //TODO: agregar restriccion de roles
+        [Authorize(Roles = "admin")]
         [HttpPost("CreateStation")]
         public async Task<IActionResult> CreateStation(CreateStationDto request, CancellationToken ct)
         {
@@ -26,7 +27,7 @@ namespace perla_metro_api_main.src.Controllers
             return result;
         }
 
-        //TODO: agregar restriccion de roles
+        [Authorize(Roles = "admin")]
         [HttpGet("Stations")]
         public async Task<IActionResult> GetStations([FromQuery] string? Name, [FromQuery] string? Type, [FromQuery] bool? State, CancellationToken ct)
         {
@@ -41,7 +42,7 @@ namespace perla_metro_api_main.src.Controllers
             return result;
         }
 
-        //TODO: agregar restriccion de roles
+        [Authorize(Roles = "admin")]
         [HttpPut("EditStation/{ID}")]
         public async Task<IActionResult> EditStation(Guid ID, EditStationDto request, CancellationToken ct)
         {
@@ -49,7 +50,7 @@ namespace perla_metro_api_main.src.Controllers
             return result;
         }
 
-        //TODO: agregar restriccion de roles
+        [Authorize(Roles = "admin")]
         [HttpPut("ChangeStateStation/{ID}")]
         public async Task<IActionResult> DisabledEnabledStation(Guid ID, CancellationToken ct)
         {
