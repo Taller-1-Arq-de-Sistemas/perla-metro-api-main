@@ -22,84 +22,47 @@ namespace perla_metro_api_main.src.Controllers
         [HttpPost("CreateStation")]
         public async Task<IActionResult> CreateStation(CreateStationDto request, CancellationToken ct)
         {
-            try
-            {
-                var response = await _stationService.CreateStation(request, ct);
-                return Ok(response);
-            }
-            catch (HttpRequestException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, new { message = e.Message });
-            }
+            var result = await ExecuteServiceStation(async () => await _stationService.CreateStation(request, ct));
+            return result;
         }
 
         //TODO: agregar restriccion de roles
         [HttpGet("Stations")]
         public async Task<IActionResult> GetStations([FromQuery] string? Name, [FromQuery] string? Type, [FromQuery] bool? State, CancellationToken ct)
         {
-            try
-            {
-                var response = await _stationService.GetSations(Name, Type, State, ct);
-                return Ok(response);
-            }
-            catch (HttpRequestException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, new { message = e.Message });
-            }
+            var result = await ExecuteServiceStation(async () => await _stationService.GetSations(Name, Type, State, ct));
+            return result;
         }
 
         [HttpGet("{ID}")]
         public async Task<IActionResult> GetStationsById(Guid ID, CancellationToken ct)
         {
-            try
-            {
-                var response = await _stationService.GetStationById(ID, ct);
-                return Ok(response);
-            }
-            catch (HttpRequestException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, new { message = e.Message });
-            }
+            var result = await ExecuteServiceStation(async () => await _stationService.GetStationById(ID,ct));
+            return result;
         }
 
         //TODO: agregar restriccion de roles
         [HttpPut("EditStation/{ID}")]
         public async Task<IActionResult> EditStation(Guid ID, EditStationDto request, CancellationToken ct)
         {
-            try
-            {
-                var response = await _stationService.EditStation(ID, request, ct);
-                return Ok(response);
-            }
-            catch (HttpRequestException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, new { message = e.Message });
-            }
+            var result = await ExecuteServiceStation(async () => await _stationService.EditStation(ID,request,ct));
+            return result;
         }
-        
+
         //TODO: agregar restriccion de roles
         [HttpPut("ChangeStateStation/{ID}")]
         public async Task<IActionResult> DisabledEnabledStation(Guid ID, CancellationToken ct)
         {
+            var result = await ExecuteServiceStation(async () => await _stationService.DisabledEnabledStation(ID,ct));
+            return result;
+        }
+        
+
+        private async Task<IActionResult> ExecuteServiceStation<T>(Func<Task<T>> serviceCall)
+        {
             try
             {
-                var response = await _stationService.DisabledEnabledStation(ID, ct);
+                var response = await serviceCall();
                 return Ok(response);
             }
             catch (HttpRequestException ex)
