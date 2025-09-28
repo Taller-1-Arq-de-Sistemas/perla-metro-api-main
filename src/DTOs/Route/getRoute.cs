@@ -2,34 +2,38 @@ namespace perla_metro_api_main.src.DTOs.Route
 {
     public class GetRoute
     {
-        public string Message { get; set; } = "";
+        public string message { get; set; } = "";
 
-        public IEnumerable<ResposeRoute> Routes { get; set; } = new List<ResposeRoute>();
+        public IEnumerable<ResposeRoute> data { get; set; } = new List<ResposeRoute>();
     }
+    
+    
     public class ResposeRoute
     {
-        public int RotueId { get; set; }
-        public required StationDto StationOrigin { get; set; }
+        public RouteDto Route { get; set; } = new();
+        public required StationDto EstacionInicio { get; set; }
 
-        public required List<StationDto> StationIntermet { get; set; } = new List<StationDto>();
+        public required List<StationDto> EstacionesIntermedias  { get; set; } = new List<StationDto>();
 
-        public required StationDto StationFinal { get; set; }
+        public required StationDto EstacionFinal  { get; set; }
 
-        public required string StartTime { get; set; }
 
-        public required string FinalTime { get; set; }
-
-        
-
+    }
+    public class RouteDto
+    {
+        public int RouteId { get; set; }
+        public string StartTime { get; set; } = "";
+        public string? EndTime{ get; set; } 
     }
     public class StationDto
     {
         public int StationId { get; set; }
 
-        public string NameStaion { get; set; } = "";
+        public string name { get; set; } = "";
 
-        public string Location { get; set; } = "";
+        public string address { get; set; } = "";
 
-        public string Type { get; set; } = "";
+        public string stopType { get; set; } = "";
+        public int stationStatus { get; set; } 
     }
 }
