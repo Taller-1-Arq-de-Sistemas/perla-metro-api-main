@@ -7,16 +7,16 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using perla_metro_api_main.src.DTOs.Route;
-using perla_metro_api_main.src.Services.Interfaces;
+using PerlaMetroApiMain.DTOs.Route;
+using PerlaMetroApiMain.Services.Interfaces;
 
-namespace perla_metro_api_main.src.Services
+namespace PerlaMetroApiMain.Services
 {
     public class RouteService : IRouteService
     {
         private readonly string? _routeUrl = null;
         private readonly HttpClient _httpClient;
-        
+
         private static readonly JsonSerializerOptions serializerOptions = new(JsonSerializerDefaults.Web);
 
         public RouteService(IConfiguration configuration, HttpClient httpClient)
@@ -62,7 +62,7 @@ namespace perla_metro_api_main.src.Services
             return result;
         }
 
-        public async Task<GetRoute> GetRoutes( CancellationToken ct)
+        public async Task<GetRoute> GetRoutes(CancellationToken ct)
         {
 
             var response = await _httpClient.GetAsync($"{_routeUrl}api/routeStation/all");
@@ -82,9 +82,9 @@ namespace perla_metro_api_main.src.Services
             var result = JsonSerializer.Deserialize<GetRoute>(payload, serializerOptions) ?? throw new InvalidOperationException("Petición no valida");
             return result;
         }
-        
+
     }
-    
+
 
 
 

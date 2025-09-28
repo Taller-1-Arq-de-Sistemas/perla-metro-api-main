@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using perla_metro_api_main.src.DTOs.Route;
-using perla_metro_api_main.src.Services;
-using perla_metro_api_main.src.Services.Interfaces;
+using PerlaMetroApiMain.DTOs.Route;
+using PerlaMetroApiMain.Services;
+using PerlaMetroApiMain.Services.Interfaces;
 using PerlaMetroApiMain.Controllers;
 
-namespace perla_metro_api_main.src.Controllers
+namespace PerlaMetroApiMain.Controllers
 {
 
     public class RouteController(IRouteService routeService) : BaseApiController
@@ -41,7 +41,7 @@ namespace perla_metro_api_main.src.Controllers
         public async Task<IActionResult> getRouteId([FromRoute] int id, CancellationToken ct)
         {
             var result = await HelperStationController(() => _routeServices.GetRouteById(id, ct));
-            return result;    
+            return result;
         }
 
         [HttpPost("Create")]
@@ -67,10 +67,10 @@ namespace perla_metro_api_main.src.Controllers
                 return StatusCode(500, new { message = "Error interno del servidor", detail = ex.Message });
             }
         }
-    
+
 
 
 
     }
-    
+
 }

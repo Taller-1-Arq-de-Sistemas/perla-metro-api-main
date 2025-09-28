@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using perla_metro_api_main.src.DTOs.Route;
+using PerlaMetroApiMain.DTOs.Route;
 
-namespace perla_metro_api_main.src.Services.Interfaces
+namespace PerlaMetroApiMain.Services.Interfaces
 {
     /// <summary>
     /// Defines the contract for Station service operations.  
@@ -28,7 +28,7 @@ namespace perla_metro_api_main.src.Services.Interfaces
         /// <param name="State">Optional filter for station state (Activa/Inactiva).</param>
         /// <param name="ct">Cancellation token to cancel the operation if needed.</param>
         /// <returns>A response DTO containing a list of stations.</returns>
-        Task<GetRoute> GetRoutes( CancellationToken ct);
+        Task<GetRoute> GetRoutes(CancellationToken ct);
 
         /// <summary>
         /// Retrieves a station by ID.
@@ -56,5 +56,5 @@ namespace perla_metro_api_main.src.Services.Interfaces
         Task<DeleteRoute> DisabledEnabledRoute(int ID, CancellationToken ct);
     }
 
-    
+
 }

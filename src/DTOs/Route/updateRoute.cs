@@ -1,4 +1,4 @@
-namespace perla_metro_api_main.src.DTOs.Route
+namespace PerlaMetroApiMain.DTOs.Route
 {
     public class updateDataRoute
     {
@@ -28,8 +28,8 @@ namespace perla_metro_api_main.src.DTOs.Route
         public List<int>? intermedio { get; set; }
         public string? startTime { get; set; }
         public string? endTime { get; set; }
-        public int routeStatus { get; set;}
-        
+        public int routeStatus { get; set; }
+
     }
-    
+
 }

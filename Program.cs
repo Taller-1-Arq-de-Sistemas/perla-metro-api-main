@@ -1,5 +1,5 @@
-//using perla_metro_api_main.src.Services;
-//using perla_metro_api_main.src.Services.Interfaces;
+//using PerlaMetroApiMain.Services;
+//using PerlaMetroApiMain.Services.Interfaces;
 
 //var builder = WebApplication.CreateBuilder(args);
 

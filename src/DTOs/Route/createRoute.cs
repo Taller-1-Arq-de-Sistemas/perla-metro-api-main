@@ -1,4 +1,4 @@
-namespace perla_metro_api_main.src.DTOs.Route
+namespace PerlaMetroApiMain.DTOs.Route
 {
     public class CreateRouteResponse
     {
