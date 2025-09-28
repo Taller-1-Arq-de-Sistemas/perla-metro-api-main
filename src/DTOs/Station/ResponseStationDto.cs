@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace perla_metro_api_main.src.DTOs.Station
+namespace PerlaMetroApiMain.DTOs.Station
 {
-     /// <summary>
+    /// <summary>
     /// DTO for the response of enabling or disabling a station.  
     /// Contains only a message indicating the result of the operation.
     /// </summary>

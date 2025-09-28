@@ -7,12 +7,12 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using perla_metro_api_main.src.DTOs.Station;
-using perla_metro_api_main.src.Services.Interfaces;
+using PerlaMetroApiMain.DTOs.Station;
+using PerlaMetroApiMain.Services.Interfaces;
 
-namespace perla_metro_api_main.src.Services
+namespace PerlaMetroApiMain.Services
 {
-   /// <summary>
+    /// <summary>
     /// Service implementation for station operations.  
     /// Handles communication with the external Station API to create, edit, retrieve, and enable/disable stations.
     /// </summary>

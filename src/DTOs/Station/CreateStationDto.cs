@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace perla_metro_api_main.src.DTOs.Station
+namespace PerlaMetroApiMain.DTOs.Station
 {
     /// <summary>
     /// DTO for creating a new station
     /// Contains the data needed to create a station in the system
-    /// <summary>
+    /// </summary>
     public class CreateStationDto
     {
 

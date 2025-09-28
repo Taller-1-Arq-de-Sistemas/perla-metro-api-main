@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using perla_metro_api_main.src.DTOs.Station;
+using PerlaMetroApiMain.DTOs.Station;
 
-namespace perla_metro_api_main.src.Services.Interfaces
+namespace PerlaMetroApiMain.Services.Interfaces
 {
     /// <summary>
     /// Defines the contract for Station service operations.  

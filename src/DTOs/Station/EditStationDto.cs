@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace perla_metro_api_main.src.DTOs.Station
+namespace PerlaMetroApiMain.DTOs.Station
 {
     /// <summary>
     /// DTO for editing an existing station

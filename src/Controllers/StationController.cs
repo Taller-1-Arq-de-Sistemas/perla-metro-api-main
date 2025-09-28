@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using perla_metro_api_main.src.DTOs.Station;
-using perla_metro_api_main.src.Services.Interfaces;
+using PerlaMetroApiMain.DTOs.Station;
+using PerlaMetroApiMain.Services.Interfaces;
 using PerlaMetroApiMain.Controllers;
 
-namespace perla_metro_api_main.src.Controllers
+namespace PerlaMetroApiMain.Controllers
 {
     /// <summary>
     /// Controller responsible for station operations.
