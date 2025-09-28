@@ -20,7 +20,6 @@ namespace PerlaMetroApiMain.Services
     {
         private readonly string _stationUrl = null!;
         private readonly HttpClient _httpclient;
-        private static readonly JsonSerializerOptions serializerOptions = new(JsonSerializerDefaults.Web);
 
         /// <summary>
         /// Initializes a new instance of "StationService".  
