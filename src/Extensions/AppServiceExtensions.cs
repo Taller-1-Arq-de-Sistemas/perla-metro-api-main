@@ -109,6 +109,7 @@ public static class AppServiceExtensions
     private static void AddServices(IServiceCollection services)
     {
         services.AddHttpClient<IUsersService, UsersService>();
+        services.AddHttpClient<IStationService, StationService>();
     }
 
     /// <summary>
@@ -119,7 +120,7 @@ public static class AppServiceExtensions
     {
         // Explorer and OpenAPI document generation
         services.AddEndpointsApiExplorer();
-        //services.AddOpenApi();
+        services.AddSwaggerGen();
     }
 
     /// <summary>
