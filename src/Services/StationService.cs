@@ -27,11 +27,11 @@ namespace PerlaMetroApiMain.Services
         /// </summary>
         /// <param name="configuration">Application configuration containing Station service settings.</param>
         /// <param name="httpClient">HTTP client used to perform API requests.</param>
-        /// <exception cref="InvalidOperationException">Thrown if StationServiceUrl is not properly configured.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if STATIONS_SERVICE_URL is not properly configured.</exception>
         public StationService(IConfiguration configuration, HttpClient httpClient)
         {
-            _stationUrl = configuration.GetValue<string>("StationServiceUrl")
-                ?? throw new InvalidOperationException("StationServiceUrl is not configured properly.");
+            _stationUrl = configuration.GetValue<string>("STATIONS_SERVICE_URL")
+                ?? throw new InvalidOperationException("STATIONS_SERVICE_URL is not configured properly.");
             _httpclient = httpClient;
         }
 

@@ -21,7 +21,7 @@ namespace PerlaMetroApiMain.Services
 
         public RouteService(IConfiguration configuration, HttpClient httpClient)
         {
-            _routeUrl = configuration.GetValue<string>("ROUTESERVICESURL") ?? "http://localhost:3000/";
+            _routeUrl = configuration.GetValue<string>("ROUTES_SERVICE_URL") ?? "http://localhost:3000/";
             _httpClient = httpClient;
         }
         public async Task<CreateRouteResponse> CreateRoute(CreateRoute request, CancellationToken ct)
