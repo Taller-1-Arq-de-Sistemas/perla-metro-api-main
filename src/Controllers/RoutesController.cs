@@ -12,7 +12,7 @@ using PerlaMetroApiMain.Controllers;
 namespace PerlaMetroApiMain.Controllers
 {
 
-    public class RouteController(IRouteService routeService) : BaseApiController
+    public class RoutesController(IRouteService routeService) : BaseApiController
     {
         private readonly IRouteService _routeServices = routeService;
 

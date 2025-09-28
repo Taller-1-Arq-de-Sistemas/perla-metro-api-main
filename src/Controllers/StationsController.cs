@@ -14,15 +14,15 @@ namespace PerlaMetroApiMain.Controllers
     /// Controller responsible for station operations.
     /// Provides endpoints to create, retrieve, update, and enable/disable stations.
     /// </summary>
-    public class StationController : BaseApiController
+    public class StationsController : BaseApiController
     {
         private readonly IStationService _stationService;
 
         /// <summary>
-        /// Initializes a new instance of "StationController".
+        /// Initializes a new instance of "StationsController".
         /// </summary>
         /// <param name="stationService">Service handling the station operations logic.</param>
-        public StationController(IStationService stationService)
+        public StationsController(IStationService stationService)
         {
             _stationService = stationService;
         }
