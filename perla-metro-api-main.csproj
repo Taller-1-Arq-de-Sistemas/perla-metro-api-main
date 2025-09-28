@@ -1,10 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>perla_metro_api_main</RootNamespace>
-  </PropertyGroup>
+    <RootNamespace>PerlaMetroApiMain</RootNamespace>
+    <UserSecretsId>09cd8c2d-d1e0-4609-8715-f93d3a194433</UserSecretsId>
+</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
+  </ItemGroup>
 
 </Project>
