@@ -54,5 +54,15 @@ namespace PerlaMetroApiMain.Services.Interfaces
         /// <param name="ct">Cancellation token to cancel the operation if needed.</param>
         /// <returns>A response DTO containing a message about the operation result.</returns>
         Task<DisabledEnabledStationResponseDto> DisabledEnabledStation(Guid ID, CancellationToken ct);
+
+        Task<resposeCreateDto> createStationRoute(responseData request, CancellationToken ct);
+
+        Task<responseUpdateDto> UpdateStationRoute(Guid id, EditStationDto request, CancellationToken ct);
+        Task<responseUpdateDto> SoftDeleteStationRoute(Guid id, CancellationToken ct);
     }
+
+
+
+
+    
 }

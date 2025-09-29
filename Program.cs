@@ -34,6 +34,7 @@
 
 using PerlaMetroApiMain.Extensions;
 
+DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 // Bind to PORT env var if provided (e.g., Render)

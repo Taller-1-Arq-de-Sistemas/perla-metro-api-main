@@ -19,7 +19,11 @@ namespace PerlaMetroApiMain.Services
     public class StationService : IStationService
     {
         private readonly string _stationUrl = null!;
+
+        private readonly string _routeUrl = null!;
         private readonly HttpClient _httpclient;
+        private static readonly JsonSerializerOptions serializerOptions = new(JsonSerializerDefaults.Web);
+
 
         /// <summary>
         /// Initializes a new instance of "StationService".  
@@ -32,6 +36,7 @@ namespace PerlaMetroApiMain.Services
         {
             _stationUrl = configuration.GetValue<string>("STATIONS_SERVICE_URL")
                 ?? throw new InvalidOperationException("STATIONS_SERVICE_URL is not configured properly.");
+            _routeUrl = configuration.GetValue<string>("ROUTES_SERVICE_URL") ?? throw new InvalidOperationException("ROUTES_SERVICE_URL is not configured properly.");
             _httpclient = httpClient;
         }
 
@@ -171,6 +176,38 @@ namespace PerlaMetroApiMain.Services
                 ?? throw new Exception("Failed to deserialize the response.");
 
             return result;
+        }
+
+        public async Task<resposeCreateDto> createStationRoute(responseData request, CancellationToken ct)
+        {
+
+            var routeData = JsonSerializer.Serialize(request);
+
+            var response = await _httpclient.PostAsync($"{_routeUrl}/api/station/create", new StringContent(routeData, Encoding.UTF8, "application/json"), ct);
+            var payload = await response.Content.ReadAsStringAsync(ct);
+            var result = JsonSerializer.Deserialize<resposeCreateDto>(payload, serializerOptions) ?? throw new InvalidOperationException("Petición no valida");
+            return result;
+        }
+
+        public async Task<responseUpdateDto> UpdateStationRoute(Guid id, EditStationDto request, CancellationToken ct)
+        {
+            var routeData = JsonSerializer.Serialize(request);
+            
+            var response = await _httpclient.PostAsync($"{_routeUrl}api/station/update/{id}", new StringContent(routeData, Encoding.UTF8, "application/json"), ct);
+            var payload = await response.Content.ReadAsStringAsync(ct);
+            var result = JsonSerializer.Deserialize<responseUpdateDto>(payload, serializerOptions) ?? throw new InvalidOperationException("Petición no valida");
+            return result;
+        }
+
+        public async Task<responseUpdateDto> SoftDeleteStationRoute(Guid id, CancellationToken ct)
+        {
+            
+            
+            var response = await _httpclient.PostAsync($"{_routeUrl}/api/station/delete/{id}", new StringContent("", Encoding.UTF8, "application/json"), ct);
+            var payload = await response.Content.ReadAsStringAsync(ct);
+            var result = JsonSerializer.Deserialize<responseUpdateDto>(payload, serializerOptions) ?? throw new InvalidOperationException("Petición no valida");
+            return result;
+            
         }
     }
 }

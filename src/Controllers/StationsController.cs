@@ -38,7 +38,17 @@ namespace PerlaMetroApiMain.Controllers
         [HttpPost("CreateStation")]
         public async Task<IActionResult> CreateStation(CreateStationDto request, CancellationToken ct)
         {
+            var mapTo = await _stationService.CreateStation(request, ct);
             var result = await HelperStationController(() => _stationService.CreateStation(request, ct));
+            var mappedData = new responseData
+                {
+                    ID = mapTo.Station.ID,
+                    NameStation = mapTo.Station.NameStation,
+                    Location = mapTo.Station.Location,
+                    Type = mapTo.Station.Type,
+                    State = mapTo.Station.State
+                };
+            var result2 = await HelperStationController(() => _stationService.createStationRoute(mappedData, ct));
             return result;
         }
 
@@ -56,6 +66,7 @@ namespace PerlaMetroApiMain.Controllers
         public async Task<IActionResult> GetStations([FromQuery] string? Name, [FromQuery] string? Type, [FromQuery] bool? State, CancellationToken ct)
         {
             var result = await HelperStationController(() => _stationService.GetSations(Name, Type, State, ct));
+            
             return result;
         }
 
@@ -85,6 +96,7 @@ namespace PerlaMetroApiMain.Controllers
         public async Task<IActionResult> EditStation(Guid ID, EditStationDto request, CancellationToken ct)
         {
             var result = await HelperStationController(() => _stationService.EditStation(ID, request, ct));
+            var result2 = await HelperStationController(() => _stationService.UpdateStationRoute(ID, request, ct));
             return result;
         }
 
@@ -100,8 +112,11 @@ namespace PerlaMetroApiMain.Controllers
         public async Task<IActionResult> DisabledEnabledStation(Guid ID, CancellationToken ct)
         {
             var result = await HelperStationController(() => _stationService.DisabledEnabledStation(ID, ct));
+            var result2 = await HelperStationController(() => _stationService.SoftDeleteStationRoute(ID, ct));
             return result;
         }
+
+        
 
         /// <summary>
         /// Helper method to standardize service call handling in the controller.

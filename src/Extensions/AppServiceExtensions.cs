@@ -99,8 +99,8 @@ public static class AppServiceExtensions
     {
         AddServices(services);
         AddOpenApiMapper(services);
-        AddAuthentication(services, config);
-        services.AddAuthorization();
+        //AddAuthentication(services, config);
+        //services.AddAuthorization();
         AddHttpContextAccessor(services);
     }
 
