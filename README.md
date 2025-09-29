@@ -8,16 +8,16 @@ This repository contains the main API used by the **Perla Metro** system from th
 - [Git](https://git-scm.com/) (version 2.49.0)
 - [Docker or Docker Desktop](https://docs.docker.com/)
 
-**Note**: This project can be setup either using the first three pre-requisites or using only Docker. It is recommended to use just **Docker**.
+> You can run the project with the .NET SDK directly or through Docker only. Docker is recommended because it avoids installing the SDK locally.
 
-**Note**: Make sure to setup the services that this main API uses. There are four and can be found in the following links:
+The API depends on the following services. Ensure they are running and reachable in your environment:
 
 - [Users Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-users-service)
 - [Stations Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-station-service)
 - [Routes Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-routes-services)
 - [Tickets Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-ticket-service)
 
-Every one of them have its own README with instructions to setup the server. Follow the instructions to run these services on local and then come back to setup the main API (this just for local development or testing).
+Each repository includes its own README with setup instructions.
 
 ## Installation and configuration
 
@@ -33,27 +33,24 @@ git clone https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-api-main.git
 cd perla-metro-api-main
 ```
 
-## Setup using Docker
+## Configuration with Docker
 
-3.1. **Create a `.env.development` using the example environment variables file and fill its values**
+1. Create a `.env.development` file from the example template and provide values that match your local services.
 
 ```bash
 cp .env.example .env.development
 ```
 
-In the `.env.development` file, you can replace:
+Key variables:
 
-- `ASPNETCORE_ENVIRONMENT` with Development or Production. For local development keep it as `Development` (enables API docs at `/swagger`).
-- `ASPNETCORE_URLS` with the port that the app use to expose the server.
-- `USERS_SERVICE_URL` with the url where the users service is exposed.
-- `STATIONS_SERVICE_URL` with the url where the stations service is exposed.
-- `ROUTES_SERVICE_URL` with the url where the routes service is exposed.
-- `TICKETS_SERVICE_URL` with the url where the tickets service is exposed.
-- `JWT_SECRET` with the JWT secret that you want to use.
+- `ASPNETCORE_ENVIRONMENT`: Use `Development` for local work so Swagger is available at `/swagger`.
+- `ASPNETCORE_URLS`: Listening address for the API.
+- `USERS_SERVICE_URL`, `STATIONS_SERVICE_URL`, `ROUTES_SERVICE_URL`, `TICKETS_SERVICE_URL`: URLs for each downstream service.
+- `JWT_SECRET`: Secret used to sign and validate JWT tokens.
 
 Once you have replaced everything, save the changes and move on to the next step.
 
-3.2. **Build the project using docker compose**
+2. Build and launch the containers
 
 ```bash
 docker compose up --build -d
@@ -61,24 +58,23 @@ docker compose up --build -d
 
 A Docker container would be running the web app in the port **8080**
 
-## Setup without Docker
+## Configuration without Docker
 
-4.1. **Restore project dependencies**
+1. Restore project dependencies
 
 ```bash
 dotnet restore
 ```
 
-4.2. **Initialize the user secrets**
+2. Initialize user secrets
 
 ```bash
 dotnet user-secrets init
 ```
 
-4.3. **Set the user secrets**
+3. Seed user secrets (adjust values as needed for your environment)
 
 ```bash
-
 dotnet user-secrets set "JWT_SECRET" "568f60141067e2f67d755a45e6afa6cc0ae70fb5c687cc7a846a2d38baf678f9"
 dotnet user-secrets set "USERS_SERVICE_URL" "http://localhost:3010"
 dotnet user-secrets set "STATIONS_SERVICE_URL" "http://localhost:3011"
@@ -88,13 +84,13 @@ dotnet user-secrets set "TICKETS_SERVICE_URL" "http://localhost:3013"
 
 **Note (secret values)**: You can change these values to whatever you want, just make sure that these values match to the values in the entire system (like the JWT secret).
 
-4.4 **Run the project**
+4. Run the application
 
 ```bash
 dotnet run
 ```
 
-The server will start on the configured URL (e.g., **8080**). Access the API via http://localhost:8080.
+The server starts at the configured address (for example, http://localhost:8080). Swagger UI is available while `ASPNETCORE_ENVIRONMENT=Development`.
 
 ## Operations
 
