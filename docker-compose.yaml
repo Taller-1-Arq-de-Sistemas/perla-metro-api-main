@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    image: perla-metro-api-main:local
+    container_name: perla-metro-api-main
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.development
