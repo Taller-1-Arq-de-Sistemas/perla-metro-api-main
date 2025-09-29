@@ -73,6 +73,8 @@ public static class AppServiceExtensions
 
         if (app.Environment.IsDevelopment())
         {
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseCors(AllowAllCorsPolicy);
         }
         else
@@ -110,6 +112,7 @@ public static class AppServiceExtensions
     {
         services.AddHttpClient<IUsersService, UsersService>();
         services.AddHttpClient<IStationService, StationService>();
+        services.AddHttpClient<IRouteService, RouteService>();
     }
 
     /// <summary>
