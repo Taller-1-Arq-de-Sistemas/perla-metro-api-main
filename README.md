@@ -10,6 +10,15 @@ This repository contains the main API used by the **Perla Metro** system from th
 
 **Note**: This project can be setup either using the first three pre-requisites or using only Docker. It is recommended to use just **Docker**.
 
+**Note**: Make sure to setup the services that this main API uses. There are four and can be found in the following links:
+
+- [Users Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-users-service.git)
+- [Stations Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-station-service.git)
+- [Routes Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-routes-service.git)
+- [Tickets Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-ticket-service.git)
+
+Every one of them have its own README with instructions to setup the server. Follow the instructions to run these services on local and then come back to setup the main API (this just for local development or testing).
+
 ## Installation and configuration
 
 1. **Clone the repository**
