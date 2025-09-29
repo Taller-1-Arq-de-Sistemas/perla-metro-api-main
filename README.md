@@ -231,7 +231,106 @@ In this module we have 7 operations:
 
 ### Stations module
 
-In this module we have n operations:
+In this module we have 5 operations:
+
+- **Create station**: This endpoint allows to create a new station in the system, avoiding duplicates by name and/or location. Its specification is like this:
+
+  - URI: Station/CreateStation
+  - Type: POST
+  - Authorization: Only users with **admin role**
+  - Input:
+    - Parameters: None
+    - Query parameters: None
+    - Body (DTO):
+      - Name: Name of the station.
+      - Location: Location of the station.
+      - Type: Type of the station (e.g., Origin, Intermediate, Destination).
+  - Response:
+    - Status code: 200 if successful.
+    - Message: "Station created successfully"
+    - Station:
+      - Id
+      - Name
+      - Location
+      - Type
+      - Status
+
+- **Get all stations**: This endpoint allows to get all stations in the system. Its specification is like this:
+
+  - URI: Station/Stations
+  - Type: GET
+  - Authorization: Only users with **admin role** (since it includes the station status).
+  - Input:
+    - Parameters: None
+    - Query parameters (optional):
+      - Name: Full or partial station name.
+      - Type: Station type.
+      - Status: One of `active`, `disabled`, or `all`.
+    - Body: None
+  - Response:
+    - Status code: 200 if successful.
+    - Message: "Stations list retrieved successfully"
+    - Stations list:
+      - Id
+      - Name
+      - Location
+      - Type
+      - Status
+
+- **Get a station by ID**: This endpoint allows to get a station in the system using its ID (only active stations). Its specification is like this:
+
+  - URI: Station/{**id**}
+  - Type: GET
+  - Authorization: No role restriction.
+  - Input:
+    - Parameters:
+      - ID: ID of the station to get.
+    - Query parameters: None
+    - Body: None
+  - Response:
+    - Status code: 200 if successful.
+    - Message: "Station retrieved successfully"
+    - Station:
+      - Id
+      - Name
+      - Location
+      - Type
+
+- **Update station**: This endpoint allows to update a station in the system using its ID. The editable fields are Name, Location, and Type. Duplicates by Name and/or Location are not allowed. Its specification is like this:
+
+  - URI: Station/EditStation
+  - Type: POST
+  - Authorization: Only users with **admin role**
+  - Input:
+    - Parameters: None
+    - Query parameters: None
+    - Body (DTO):
+      - Id: ID of the station.
+      - Name: New name of the station.
+      - Location: New location of the station.
+      - Type: New type of the station.
+  - Response:
+    - Status code: 200 if successful.
+    - Message: "Station updated successfully"
+    - Station:
+      - Id
+      - Name
+      - Location
+      - Type
+
+- **Change station state (Soft delete / enable-disable)**: This endpoint allows to enable or disable a station (soft delete). The station record remains in the database, but its status is updated. Its specification is like this:
+
+  - URI: Station/ChangeStateStation/{**id**}
+  - Type: POST
+  - Authorization: Only users with **admin role**
+  - Input:
+    - Parameters:
+      - ID: ID of the station.
+    - Query parameters: None
+    - Body: None
+  - Response:
+    - Status code: 200 if successful.
+    - Message: "Station state changed successfully"
 
 ### Routes module
 
