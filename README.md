@@ -12,10 +12,10 @@ This repository contains the main API used by the **Perla Metro** system from th
 
 **Note**: Make sure to setup the services that this main API uses. There are four and can be found in the following links:
 
-- [Users Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-users-service.git)
-- [Stations Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-station-service.git)
-- [Routes Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-routes-service.git)
-- [Tickets Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-ticket-service.git)
+- [Users Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-users-service)
+- [Stations Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-station-service)
+- [Routes Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-routes-services)
+- [Tickets Service](https://github.com/Taller-1-Arq-de-Sistemas/perla-metro-ticket-service)
 
 Every one of them have its own README with instructions to setup the server. Follow the instructions to run these services on local and then come back to setup the main API (this just for local development or testing).
 
@@ -264,6 +264,13 @@ The service uses several patterns to keep the codebase modular, testable, and ma
 **Configuration via Extension Methods:** Presentation/infrastructure wiring is grouped in extension methods (`AppServiceExtensions`) to keep `Program.cs` minimal and clarify composition.
 
 **Routing Convention:** `LowercaseParameterTransformer` enforces lowercase route tokens via `RouteTokenTransformerConvention` for consistent URLs.
+
+## Assumptions and decisions
+
+The implementation closely follows the workshop specification with two notable adjustments:
+
+- All endpoints except login and register require authentication.
+- The station type attribute is omitted in the stations table to simplify communication between station and route services.
 
 ## Production notes
 
